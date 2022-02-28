@@ -5,12 +5,15 @@ let search = ''
 
 const loadPhones = async () => {
     const searchField = document.getElementById('search-text')
-    search = searchField.value.toLowerCase()
+    search = searchField.value.toLowerCase() // averting case-sensitivity
+    //clearing all sorts of inner content on each search click
     searchField.value = ''
     srcResult.textContent = ''
     singleDetails.textContent = ''
     error.innerText = ''
+    document.getElementById('show-all').style.display = 'none'
 
+    //numeric value and empty string validating
     if (!isNaN(search) || search == '') {
         error.innerText = 'Please write something'
     } else {
@@ -29,7 +32,7 @@ const loadPhones = async () => {
     }
 }
 
-// Twenty search result display
+// Twenty search result block
 const show20Result = phones => {
     let counter = 0
     if (phones.length == 0) {
@@ -41,13 +44,13 @@ const show20Result = phones => {
             return
         }
         const div = document.createElement('div')
-        div.classList.add('col-lg-4', 'col-md-4', 'col-sm-8', 'col-8', 'text-center', 'm-auto', 'p-4')
+        div.classList.add('col', 'text-center', 'p-4')
         div.innerHTML = `
            <div class="border rounded shadow-lg p-3">
                 <img src="${phone.image}">
                 <h5 class="mt-1">${phone.phone_name}</h5>
                 <p>${phone.brand}</p>
-                <button onclick="loadSingle('${phone.slug}')" class="btn btn-success">Explore</button>
+                <button onclick="loadSingle('${phone.slug}')" class="btn btn-warning">Explore</button>
            </div>
         `
         srcResult.appendChild(div)
@@ -55,7 +58,7 @@ const show20Result = phones => {
     })
 }
 
-//Show all results part once click on show all button
+//Show all results once click on the show all button
 document.getElementById('show-all').addEventListener('click', async () => {
     document.getElementById('show-all').style.display = 'none'
     const url = `https://openapi.programming-hero.com/api/phones?search=${search}`
@@ -76,20 +79,20 @@ const showAllResult = phones => {
     srcResult.textContent = ''
     phones.forEach(phone => {
         const div = document.createElement('div')
-        div.classList.add('col-lg-4', 'col-md-4', 'col-sm-10', 'col-10', 'text-center', 'm-auto', 'p-4')
+        div.classList.add('col', 'text-center', 'p-4')
         div.innerHTML = `
            <div class="border rounded shadow-lg p-3">
                 <img src="${phone.image}">
                 <h5 class="mt-1">${phone.phone_name}</h5>
                 <p>${phone.brand}</p>
-                <button onclick="loadSingle('${phone.slug}')" class="btn btn-success">Explore</button>
+                <button onclick="loadSingle('${phone.slug}')" class="btn btn-warning">Explore</button>
            </div>
         `
         srcResult.appendChild(div)
     })
 }
 
-//Single item details part
+//Single item details block
 const loadSingle = async id => {
     const url = `https://openapi.programming-hero.com/api/phone/${id}`
     try {
@@ -103,7 +106,6 @@ const loadSingle = async id => {
 
 const showsingleDetails = phone => {
     singleDetails.textContent = ''
-    console.log(phone)
     const div1 = document.createElement('div')
     div1.classList.add('col-lg-3', 'col-12', 'text-center')
     div1.innerHTML = `
@@ -113,8 +115,6 @@ const showsingleDetails = phone => {
             <p>${phone.releaseDate ? phone.releaseDate : 'No date found'}</p>
        </div>
     `
-    singleDetails.appendChild(div1)
-
     const div2 = document.createElement('div')
     div2.classList.add('col-lg-9', 'col-12')
     div2.innerHTML = `
@@ -133,6 +133,7 @@ const showsingleDetails = phone => {
             <h6 class="d-inline">USB:</h6> ${phone.others.USB}
        </div>
     `
+    singleDetails.appendChild(div1)
     singleDetails.appendChild(div2)
 }
 
