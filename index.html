@@ -18,15 +18,20 @@
             <input id="search-text" type="text" class="form-control" placeholder="Search your endearing phone"
                 aria-label="Search your endearing phone" aria-describedby="search-btn">
             <button onclick="loadPhones()" class="btn btn-outline-secondary" type="button"
-                id="search-btn">Button</button>
+                id="search-btn">Search</button>
         </div>
 
         <!-- error msg -->
         <h3 id="error" class="text-center text-danger"></h3>
 
         <!-- single details -->
-        <div id="single-details" class="row">
+        <div class="row mt-4 p-3">
+            <div class="col-lg-8 col-12">
+                <div id="single-details"
+                    class="row rounded shadow-lg d-flex flex-column align-items-center d-lg-flex flex-lg-row">
 
+                </div>
+            </div>
         </div>
 
         <!-- search result -->
@@ -35,6 +40,8 @@
         </div>
         <button id="show-all" class="btn btn-warning mb-5 p-2 m-auto" style="display: none;">Show
             All</button>
+
+        <!-- script source -->
         <script src="js/app.js"></script>
     </body>
 

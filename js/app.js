@@ -8,12 +8,13 @@ const loadPhones = async () => {
     search = searchField.value.toLowerCase()
     searchField.value = ''
     srcResult.textContent = ''
+    singleDetails.textContent = ''
+    error.innerText = ''
 
     if (!isNaN(search) || search == '') {
         error.innerText = 'Please write something'
 
     } else {
-        error.innerText = ''
         const url = `https://openapi.programming-hero.com/api/phones?search=${search}`
         try {
             const res = await fetch(url)
@@ -25,8 +26,12 @@ const loadPhones = async () => {
     }
 }
 
+// Twenty search result display
 const show20Result = phones => {
     let counter = 0
+    if (phones.length == 0) {
+        error.innerText = 'No phone found!'
+    }
     phones.forEach(phone => {
         if (counter == 20) {
             document.getElementById('show-all').style.display = 'block'
@@ -39,7 +44,7 @@ const show20Result = phones => {
                 <img src="${phone.image}">
                 <h5>${phone.phone_name}</h5>
                 <p>${phone.brand}</p>
-                <button class="btn btn-secondary">Explore</button>
+                <button onclick="loadSingle('${phone.slug}')" class="btn btn-success">Explore</button>
            </div>
         `
         srcResult.appendChild(div)
@@ -47,6 +52,7 @@ const show20Result = phones => {
     })
 }
 
+//Show all results part once click on show all button
 document.getElementById('show-all').addEventListener('click', async () => {
     document.getElementById('show-all').style.display = 'none'
     const url = `https://openapi.programming-hero.com/api/phones?search=${search}`
@@ -62,17 +68,57 @@ document.getElementById('show-all').addEventListener('click', async () => {
 const showAllResult = phones => {
     srcResult.textContent = ''
     phones.forEach(phone => {
-        console.log(phone)
         const div = document.createElement('div')
-        div.classList.add('col-lg-4', 'col-md-4', 'col-sm-8', 'col-8', 'text-center', 'm-auto', 'p-4')
+        div.classList.add('col-lg-4', 'col-md-4', 'col-sm-10', 'col-10', 'text-center', 'm-auto', 'p-4')
         div.innerHTML = `
            <div class="border rounded shadow-lg p-3">
                 <img src="${phone.image}">
                 <h5>${phone.phone_name}</h5>
                 <p>${phone.brand}</p>
-                <button class="btn btn-secondary">Explore</button>
+                <button onclick="loadSingle('${phone.slug}')" class="btn btn-success">Explore</button>
            </div>
         `
         srcResult.appendChild(div)
     })
+}
+
+//Single item details part
+const loadSingle = async id => {
+    const url = `https://openapi.programming-hero.com/api/phone/${id}`
+    try {
+        const res = await fetch(url)
+        const data = await res.json()
+        showsingleDetails(data.data)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const showsingleDetails = phone => {
+    singleDetails.textContent = ''
+    console.log(phone)
+    const div1 = document.createElement('div')
+    div1.classList.add('col-lg-3', 'col-12', 'text-center')
+    div1.innerHTML = `
+       <div class="p-3">
+            <img src="${phone.image}">
+            <h5>${phone.name}</h5>
+            <p>${phone.releaseDate ? phone.releaseDate : 'No date found'}</p>
+       </div>
+    `
+    singleDetails.appendChild(div1)
+
+    const div2 = document.createElement('div')
+    div2.classList.add('col-lg-9', 'col-12')
+    div2.innerHTML = `
+       <div class="p-3">
+            <h3>Main features</h3>
+            <hr class="mt-1 mb-1">
+            <h6 class="d-inline">Chipset:</h6> ${phone.mainFeatures.chipSet} <br>
+            <h6 class="d-inline">Display:</h6> ${phone.mainFeatures.displaySize} <br>
+            <h6 class="d-inline">Memory:</h6> ${phone.mainFeatures.memory} <br>
+            <h6 class="d-inline">Sensor:</h6> ${phone.mainFeatures.sensors}
+       </div>
+    `
+    singleDetails.appendChild(div2)
 }
