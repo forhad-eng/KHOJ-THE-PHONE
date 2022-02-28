@@ -42,7 +42,7 @@ const show20Result = phones => {
         div.innerHTML = `
            <div class="border rounded shadow-lg p-3">
                 <img src="${phone.image}">
-                <h5>${phone.phone_name}</h5>
+                <h5 class="mt-1">${phone.phone_name}</h5>
                 <p>${phone.brand}</p>
                 <button onclick="loadSingle('${phone.slug}')" class="btn btn-success">Explore</button>
            </div>
@@ -73,7 +73,7 @@ const showAllResult = phones => {
         div.innerHTML = `
            <div class="border rounded shadow-lg p-3">
                 <img src="${phone.image}">
-                <h5>${phone.phone_name}</h5>
+                <h5 class="mt-1">${phone.phone_name}</h5>
                 <p>${phone.brand}</p>
                 <button onclick="loadSingle('${phone.slug}')" class="btn btn-success">Explore</button>
            </div>
@@ -102,7 +102,7 @@ const showsingleDetails = phone => {
     div1.innerHTML = `
        <div class="p-3">
             <img src="${phone.image}">
-            <h5>${phone.name}</h5>
+            <h5 class="mt-1">${phone.name}</h5>
             <p>${phone.releaseDate ? phone.releaseDate : 'No date found'}</p>
        </div>
     `
@@ -118,6 +118,12 @@ const showsingleDetails = phone => {
             <h6 class="d-inline">Display:</h6> ${phone.mainFeatures.displaySize} <br>
             <h6 class="d-inline">Memory:</h6> ${phone.mainFeatures.memory} <br>
             <h6 class="d-inline">Sensor:</h6> ${phone.mainFeatures.sensors}
+            <h3 class="mt-2">Others</h3>
+            <hr class="mt-0 mb-1">
+            <h6 class="d-inline">Bluetooth:</h6> ${phone.others.Bluetooth} <br>
+            <h6 class="d-inline">GPS:</h6> ${phone.others.GPS} <br>
+            <h6 class="d-inline">NFC:</h6> ${phone.others.NFC} <br>
+            <h6 class="d-inline">USB:</h6> ${phone.others.USB}
        </div>
     `
     singleDetails.appendChild(div2)
