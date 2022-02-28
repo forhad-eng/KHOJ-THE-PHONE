@@ -10,9 +10,29 @@
             integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     </head>
 
-    <body>
-        <h2 class="text-center">Welcome To Khoj The Phone</h2>
+    <body class="container">
+        <h2 class="text-center mt-4 mb-4">Welcome To Khoj The Phone</h2>
 
+        <!-- search box -->
+        <div class="input-group mb-3 w-50 m-auto">
+            <input id="search-text" type="text" class="form-control" placeholder="Search your endearing phone"
+                aria-label="Search your endearing phone" aria-describedby="search-btn">
+            <button onclick="loadPhones()" class="btn btn-outline-secondary" type="button"
+                id="search-btn">Button</button>
+        </div>
+
+        <!-- error msg -->
+        <h3 id="error" class="text-center text-danger"></h3>
+
+        <!-- single details -->
+        <div id="single-details" class="row">
+
+        </div>
+
+        <!-- search result -->
+        <div id="search-result" class="row">
+
+        </div>
         <script src="js/app.js"></script>
     </body>
 
