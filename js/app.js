@@ -13,13 +13,16 @@ const loadPhones = async () => {
 
     if (!isNaN(search) || search == '') {
         error.innerText = 'Please write something'
-
     } else {
+        showSpinner()
         const url = `https://openapi.programming-hero.com/api/phones?search=${search}`
         try {
             const res = await fetch(url)
             const data = await res.json()
-            show20Result(data.data)
+            if (res) {
+                hideSpinner()
+                show20Result(data.data)
+            }
         } catch (error) {
             console.log(error)
         }
@@ -56,10 +59,14 @@ const show20Result = phones => {
 document.getElementById('show-all').addEventListener('click', async () => {
     document.getElementById('show-all').style.display = 'none'
     const url = `https://openapi.programming-hero.com/api/phones?search=${search}`
+    showSpinner()
     try {
         const res = await fetch(url)
         const data = await res.json()
-        showAllResult(data.data)
+        if (res) {
+            hideSpinner()
+            showAllResult(data.data)
+        }
     } catch (error) {
         console.log(error)
     }
@@ -127,4 +134,13 @@ const showsingleDetails = phone => {
        </div>
     `
     singleDetails.appendChild(div2)
+}
+
+//Spinner
+const hideSpinner = () => {
+    document.getElementById('spinner').style.display = 'none'
+}
+hideSpinner()
+const showSpinner = () => {
+    document.getElementById('spinner').style.display = 'block'
 }
