@@ -112,7 +112,7 @@ const showsingleDetails = phone => {
        <div class="p-3">
             <img src="${phone.image}">
             <h5 class="mt-1">${phone.name}</h5>
-            <p>${phone.releaseDate ? phone.releaseDate : 'No date found'}</p>
+            <p>${phone.releaseDate ? phone.releaseDate : 'No release date found'}</p>
        </div>
     `
     const div2 = document.createElement('div')
