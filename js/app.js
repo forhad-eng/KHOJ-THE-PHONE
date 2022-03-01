@@ -32,6 +32,21 @@ const loadPhones = async () => {
     }
 }
 
+//Phone div
+const showPhone = (image, name, brand, id) => {
+    const div = document.createElement('div')
+    div.classList.add('col', 'text-center', 'p-4')
+    div.innerHTML = `
+       <div class="border rounded shadow-lg p-3">
+            <img src="${image}">
+            <h5 class="mt-1">${name}</h5>
+            <p>${brand}</p>
+            <button onclick="loadSingle('${id}')" class="btn btn-warning">Explore</button>
+       </div>
+    `
+    srcResult.appendChild(div)
+}
+
 // Twenty search result block
 const show20Result = phones => {
     let counter = 0
@@ -43,17 +58,7 @@ const show20Result = phones => {
             document.getElementById('show-all').style.display = 'block'
             return
         }
-        const div = document.createElement('div')
-        div.classList.add('col', 'text-center', 'p-4')
-        div.innerHTML = `
-           <div class="border rounded shadow-lg p-3">
-                <img src="${phone.image}">
-                <h5 class="mt-1">${phone.phone_name}</h5>
-                <p>${phone.brand}</p>
-                <button onclick="loadSingle('${phone.slug}')" class="btn btn-warning">Explore</button>
-           </div>
-        `
-        srcResult.appendChild(div)
+        showPhone(phone.image, phone.phone_name, phone.brand, phone.slug)
         counter++
     })
 }
@@ -78,17 +83,7 @@ document.getElementById('show-all').addEventListener('click', async () => {
 const showAllResult = phones => {
     srcResult.textContent = ''
     phones.forEach(phone => {
-        const div = document.createElement('div')
-        div.classList.add('col', 'text-center', 'p-4')
-        div.innerHTML = `
-           <div class="border rounded shadow-lg p-3">
-                <img src="${phone.image}">
-                <h5 class="mt-1">${phone.phone_name}</h5>
-                <p>${phone.brand}</p>
-                <button onclick="loadSingle('${phone.slug}')" class="btn btn-warning">Explore</button>
-           </div>
-        `
-        srcResult.appendChild(div)
+        showPhone(phone.image, phone.phone_name, phone.brand, phone.slug)
     })
 }
 
@@ -107,31 +102,27 @@ const loadSingle = async id => {
 const showsingleDetails = phone => {
     singleDetails.textContent = ''
     const div1 = document.createElement('div')
-    div1.classList.add('col-lg-3', 'col-12', 'text-center')
+    div1.classList.add('col-lg-3', 'col-12', 'p-3', 'text-center')
     div1.innerHTML = `
-       <div class="p-3">
-            <img src="${phone.image}">
-            <h5 class="mt-1">${phone.name}</h5>
-            <p>${phone.releaseDate ? phone.releaseDate : 'No release date found'}</p>
-       </div>
+        <img src="${phone.image}">
+        <h5 class="mt-1">${phone.name}</h5>
+        <p>${phone.releaseDate ? phone.releaseDate : 'No release date found'}</p>
     `
     const div2 = document.createElement('div')
-    div2.classList.add('col-lg-9', 'col-12')
+    div2.classList.add('col-lg-9', 'col-12', 'p-3')
     div2.innerHTML = `
-       <div class="p-3">
-            <h3>Main features</h3>
-            <hr class="mt-1 mb-1">
-            <h6 class="d-inline">Chipset:</h6> ${phone.mainFeatures.chipSet} <br>
-            <h6 class="d-inline">Display:</h6> ${phone.mainFeatures.displaySize} <br>
-            <h6 class="d-inline">Memory:</h6> ${phone.mainFeatures.memory} <br>
-            <h6 class="d-inline">Sensor:</h6> ${phone.mainFeatures.sensors}
-            <h3 class="mt-2">Others</h3>
-            <hr class="mt-0 mb-1">
-            <h6 class="d-inline">Bluetooth:</h6> ${phone.others.Bluetooth} <br>
-            <h6 class="d-inline">GPS:</h6> ${phone.others.GPS} <br>
-            <h6 class="d-inline">NFC:</h6> ${phone.others.NFC} <br>
-            <h6 class="d-inline">USB:</h6> ${phone.others.USB}
-       </div>
+        <h3>Main features</h3>
+        <hr class="mt-1 mb-1">
+        <h6 class="d-inline">Chipset:</h6> ${phone?.mainFeatures?.chipSet} <br>
+        <h6 class="d-inline">Display:</h6> ${phone?.mainFeatures?.displaySize} <br>
+        <h6 class="d-inline">Memory:</h6> ${phone?.mainFeatures?.memory} <br>
+        <h6 class="d-inline">Sensor:</h6> ${phone?.mainFeatures?.sensors}
+        <h3 class="mt-2">Others</h3>
+        <hr class="mt-0 mb-1">
+        <h6 class="d-inline">Bluetooth:</h6> ${phone?.others?.Bluetooth} <br>
+        <h6 class="d-inline">GPS:</h6> ${phone?.others?.GPS} <br>
+        <h6 class="d-inline">NFC:</h6> ${phone?.others?.NFC} <br>
+        <h6 class="d-inline">USB:</h6> ${phone?.others?.USB}    
     `
     singleDetails.appendChild(div1)
     singleDetails.appendChild(div2)
